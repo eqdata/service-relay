@@ -1,0 +1,29 @@
+{
+  "name": "service-relay",
+  "version": "1.0.0",
+  "description": "Relay service for auction lines to the web-front end, utilises SocketIO for realtime messaging and receives message batches of HTTP via POST",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/eqdata/service-relay.git"
+  },
+  "keywords": [
+    "socket-io",
+    "rest",
+    "everquest"
+  ],
+  "author": "Alex Sims",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eqdata/service-relay/issues"
+  },
+  "homepage": "https://github.com/eqdata/service-relay#readme",
+  "dependencies": {
+    "body-parser": "^1.16.0",
+    "express": "^4.10.2",
+    "socket.io": "^1.7.2"
+  }
+}

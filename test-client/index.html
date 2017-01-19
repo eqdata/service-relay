@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+<head>
+    <title>Socket.IO test</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        h1 { margin: 0 auto; text-align: center; margin-top: 40px;}
+        body { font: 13px Helvetica, Arial; }
+        form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+        form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+        form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+        #messages { list-style-type: none; margin: 0; padding: 0; }
+        #messages li { padding: 5px 10px; line-height: 24px; }
+
+        #message-wrapper {
+            width: 1200px;
+            margin: 0 auto;
+            height: 700px;
+            background: rgba(16, 17, 36, 0.91);
+            padding: 20px 10px;
+            margin-top: 40px;
+            color: white;
+            font-size: 14px;
+            border-radius: 5px;
+            overflow-y: auto;
+        }
+        #messages a {
+            color: #cb48c6;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<h1>EQ Data - Test client</h1>
+<div id="message-wrapper">
+    <ul id="messages">
+        <li>Connecting to the auction server...</li>
+    </ul>
+</div>
+
+<script src="https://cdn.socket.io/socket.io-1.4.5.js" type="text/javascript"></script>
+<script>
+    var socket = io("http://localhost:3000");
+    var list = document.querySelector('#messages');
+    var maxListItems = 300
+
+    console.log("Connecting to the tunnel...");
+
+    socket.on('join', function(auctions) {
+        if(list) {
+            var li = document.createElement('li');
+            li.innerText = "You have entered the East Commonlands..."
+            list.appendChild(li);
+        }
+        if (auctions.PreviousAuctions.length > 0) {
+            auctions.PreviousAuctions.forEach(function(line) { this.addAuctionLine(line) });
+        } else {
+            console.log("Connected to the tunnel");
+        }
+    });
+
+    socket.on('auctions-updated', function(auctions) {
+        auctions.forEach(function(line) { this.addAuctionLine(line) });
+    });
+
+    function addAuctionLine(auctionLine) {
+        if(list) {
+            console.log("Appending line: ", auctionLine)
+            var li = document.createElement('li');
+            li.innerHTML = auctionLine.line
+            list.appendChild(li)
+        }
+    }
+</script>
+</body>
+</html>
