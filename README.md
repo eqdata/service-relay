@@ -44,7 +44,7 @@ socket.on('auctions-updated', function(auctions) {
 });
 ```
 
-In the above example we consume an `auctions` array which follows the same format as the `PreviousAuctions` array returned in `join`.   The above example simply iterates over each auction in the array and appends it out to a <ul>, `updateScrollHeight()` is used to force the scroll position of the <ul> to the bottom.
+In the above example we consume an `auctions` array which follows the same format as the `PreviousAuctions` array returned in `join`.   The above example simply iterates over each auction in the array and appends it out to a unordered list, `updateScrollHeight()` is used to force the scroll position of the unordered list to the bottom.
 
 Finally you may choose to listen for a `disconnect` event.  In the case the socket connection is hung up, please ensure you set a timeout on the reconnect to avoid spamming the server with a large throughput of requests:
 
