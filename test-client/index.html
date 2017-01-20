@@ -9,8 +9,11 @@
         form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
         form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
         form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
-        #messages { list-style-type: none; margin: 0; padding: 0; }
-        #messages li { padding: 5px 10px; line-height: 24px; }
+        #messages {
+            list-style-type: none; margin: 0; padding: 0;
+        }
+        #messages li { padding: 5px 10px; line-height: 24px; color: #008c00
+        }
 
         #message-wrapper {
             width: 1200px;
@@ -42,6 +45,7 @@
 <script>
     var socket = io("http://localhost:3000");
     var list = document.querySelector('#messages');
+    var container = document.querySelector("#message-wrapper");
     var maxListItems = 300
 
     console.log("Connecting to the tunnel...");
@@ -54,6 +58,7 @@
         }
         if (auctions.PreviousAuctions.length > 0) {
             auctions.PreviousAuctions.forEach(function(line) { this.addAuctionLine(line) });
+            updateScrollHeight()
         } else {
             console.log("Connected to the tunnel");
         }
@@ -61,7 +66,14 @@
 
     socket.on('auctions-updated', function(auctions) {
         auctions.forEach(function(line) { this.addAuctionLine(line) });
+        updateScrollHeight()
     });
+
+    function updateScrollHeight() {
+        if(container) {
+            container.scrollTop = container.scrollHeight
+        }
+    }
 
     function addAuctionLine(auctionLine) {
         if(list) {
